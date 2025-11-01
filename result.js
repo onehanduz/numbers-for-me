@@ -2,7 +2,8 @@ let startTime;
 let endTime;
 let stop_time = 0;
 let stop_time_counter = 0;
-
+let pure_time = 0;
+let avaragetime = 0;
 let elapsedTime = 0;
 let timerInterval;
 let interval;
@@ -74,10 +75,10 @@ function calculateResults(resultTime) {
 
 function printHead(resultTime) {
   let times = Number(endTime - startTime);
-  let avaragetime = Number(
+  avaragetime = Number(
     (times - stop_time) / resultTime.length - stop_time_counter
   );
-  let pure_time = times - stop_time;
+  pure_time = times - stop_time;
   document.getElementById("amountofres").innerHTML = resultTime.length;
   document.getElementById("timeofres").innerHTML = timeToString(times);
   document.getElementById("amountofrestimeer").innerHTML =
@@ -120,4 +121,9 @@ function copyElements() {
     if (element.time > avarage) text = text + " " + memoNums[element.counter];
   }
   navigator.clipboard.writeText(text.trim());
+}
+function copyTime() {
+  navigator.clipboard.writeText(
+    timeToString(pure_time) + "/" + timeToString(avaragetime)
+  );
 }

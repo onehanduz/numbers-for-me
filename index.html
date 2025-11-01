@@ -268,6 +268,14 @@
         >
           Copy slower than average
         </button>
+        <button
+          id="copy"
+          style="font-size: 0.7em; margin-top: 0.7em"
+          class="inverted ui green icon button"
+          onclick="copyTime()"
+        >
+          Copy time
+        </button>
       </div>
       <table class="inverted ui table">
         <thead>
@@ -382,7 +390,8 @@
         startTime = 0;
         stop_time = 0;
         stop_time_counter = 0;
-
+        pure_time = 0;
+        avaragetime = 0;
         elapsedTime = 0;
         endTime = 0;
         counterClick = 0;
