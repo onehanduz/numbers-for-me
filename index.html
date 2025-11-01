@@ -233,6 +233,13 @@
         <i style="font-size: 5.5em; padding-top: 37.5" class="play icon"></i>
       </button>
     </div>
+
+    <button class="ui danger icon huge button memoElo" onclick="memoElo()">
+      <i
+        style="font-size: 4em; padding-top: 25px"
+        class="horizontally undo play icon"
+      ></i>
+    </button>
   </div>
   <div id="numResult" style="display: none" class="inverted ui container">
     <font size="9">
@@ -273,8 +280,16 @@
             <td id="amountofres"></td>
           </tr>
           <tr>
-            <td>Spent:</td>
+            <td>All time:</td>
             <td id="timeofres"></td>
+          </tr>
+          <tr>
+            <td>Stop time:</td>
+            <td id="amountofrestime"></td>
+          </tr>
+          <tr>
+            <td>Spended:</td>
+            <td id="amountofrestimeer"></td>
           </tr>
           <tr>
             <td>Average:</td>
@@ -310,6 +325,8 @@
         }
         if (evt.keyCode == 32) {
           memoReturn();
+        } else if (evt.keyCode == 38 || evt.keyCode == 40) {
+          memoElo();
         }
       }
     };
@@ -363,6 +380,9 @@
         resultTime = [];
         memoNums = ["START"];
         startTime = 0;
+        stop_time = 0;
+        stop_time_counter = 0;
+
         elapsedTime = 0;
         endTime = 0;
         counterClick = 0;

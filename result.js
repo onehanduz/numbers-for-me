@@ -1,5 +1,8 @@
 let startTime;
 let endTime;
+let stop_time = 0;
+let stop_time_counter = 0;
+
 let elapsedTime = 0;
 let timerInterval;
 let interval;
@@ -46,38 +49,43 @@ function pause() {
 }
 
 function calculateResults(resultTime) {
-  let array1 = [];
-  for (let i = 0; i < resultTime.length; i++) {
-    let counter = resultTime[i].counter;
-    let start = resultTime[i].start;
-    let stop = resultTime[i].stop;
-    let res = Number(stop - start);
-    let another = resultTime.reduce((r, n, iw) => {
-      n.counter == counter && r.push(iw);
-      return r;
-    }, []);
-    if (another.length > 1 && another[0] == i) {
-      for (let i = 1; i < another.length; i++) {
-        res = Number(
-          res + resultTime[another[i]].stop - resultTime[another[i]].start
-        );
-      }
-      array1.push({ counter: counter, time: res });
-    } else if (another.length == 1) {
-      array1.push({ counter: counter, time: res });
+  const results = {};
+
+  for (const { counter, start, stop } of resultTime) {
+    const duration = stop - start;
+    results[counter] = (results[counter] || 0) + duration;
+    console.log(results);
+    console.log(resultTime);
+  }
+
+  // Separate counter 0 and others
+  const array1 = [];
+  for (const [counter, total] of Object.entries(results)) {
+    if (Number(counter) === 0) {
+      stop_time += total;
+      stop_time_counter++;
+    } else {
+      array1.push({ counter: Number(counter), time: total });
     }
   }
+
   return array1;
 }
 
 function printHead(resultTime) {
   let times = Number(endTime - startTime);
-
+  let avaragetime = Number(
+    (times - stop_time) / resultTime.length - stop_time_counter
+  );
+  let pure_time = times - stop_time;
   document.getElementById("amountofres").innerHTML = resultTime.length;
   document.getElementById("timeofres").innerHTML = timeToString(times);
-  document.getElementById("timeofavarage").innerHTML = timeToString(
-    Number(times / resultTime.length)
-  );
+  document.getElementById("amountofrestimeer").innerHTML =
+    timeToString(pure_time);
+  document.getElementById("amountofrestime").innerHTML =
+    timeToString(stop_time);
+  document.getElementById("timeofavarage").innerHTML =
+    timeToString(avaragetime);
 }
 
 function compareNumbers(a, b) {
