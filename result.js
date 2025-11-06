@@ -55,8 +55,6 @@ function calculateResults(resultTime) {
   for (const { counter, start, stop } of resultTime) {
     const duration = stop - start;
     results[counter] = (results[counter] || 0) + duration;
-    console.log(results);
-    console.log(resultTime);
   }
 
   // Separate counter 0 and others

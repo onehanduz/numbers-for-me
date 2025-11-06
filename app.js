@@ -73,10 +73,10 @@ function easyGenNum(objd) {
     if (objd.image == 1) {
       memoNums.push(digit[element1]);
     } else if (objd.image == 2) {
-      memoNums.push(digit[element1] + "" + digit[element2]);
+      memoNums.push(digit[element1] + " " + digit[element2]);
     } else if (objd.image == 3) {
       memoNums.push(
-        digit[element1] + "" + digit[element2] + "" + digit[element3]
+        digit[element1] + " " + digit[element2] + " " + digit[element3]
       );
     }
   }
@@ -117,16 +117,16 @@ function generateNumsUnrepImg(objd) {
       ) {
         return generateNums(objd);
       } else {
-        memoNums.push(newDigits1[element1] + "" + newDigits2[element2]);
+        memoNums.push(newDigits1[element1] + " " + newDigits2[element2]);
         if (objd.unrepeatable1 == "true") newDigits1.splice(element1, 1);
         if (objd.unrepeatable2 == "true") newDigits2.splice(element2, 1);
       }
     } else if (objd.image == 3) {
       memoNums.push(
         newDigits1[element1] +
-          "" +
+          " " +
           newDigits2[element2] +
-          "" +
+          " " +
           newDigits3[element3]
       );
       if (objd.unrepeatable1 == "true") newDigits1.splice(element1, 1);
