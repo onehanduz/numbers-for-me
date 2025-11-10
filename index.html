@@ -68,6 +68,8 @@
                 name="amount"
                 type="number"
                 placeholder="100"
+                min="0"
+                max="1000"
               />
             </div>
             <div class="inverted field">
@@ -77,6 +79,8 @@
                 name="minValue"
                 type="number"
                 placeholder="000"
+                min="0"
+                max="999"
               />
             </div>
             <div class="inverted field">
@@ -86,47 +90,23 @@
                 name="maxValue"
                 type="number"
                 placeholder="1000"
+                min="0"
+                max="1000"
               />
             </div>
           </div>
-          <label class="inverted ui dividing header">Unrepeatable</label>
-          <div class="inverted three fields">
-            <div class="inverted field">
-              <label>1-image</label>
-              <select
-                style="color: white; background: #232b32; margin-top: 10px"
-                name="unrepeatable1"
-                class="inverted ui hugedropdown"
-              >
-                <option value="true">Yes</option>
-                <option value="false">No</option>
-              </select>
-            </div>
-            <div class="inverted field">
-              <label>2-image</label>
-              <select
-                style="color: white; background: #232b32; margin-top: 10px"
-                name="unrepeatable2"
-                class="inverted ui hugedropdown"
-              >
-                <option value="false">No</option>
-                <option value="true">Yes</option>
-              </select>
-            </div>
-            <div class="inverted field">
-              <label>3-image</label>
-              <select
-                style="color: white; background: #232b32; margin-top: 10px"
-                name="unrepeatable3"
-                class="inverted ui hugedropdown"
-              >
-                <option value="false">No</option>
-                <option value="true">Yes</option>
-              </select>
-            </div>
-          </div>
-
           <div class="inverted two fields">
+            <div class="inverted field">
+              <label>Repeatable</label>
+              <select
+                style="color: white; background: #232b32; margin-top: 10px"
+                name="repeatable"
+                class="inverted ui hugedropdown"
+              >
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+              </select>
+            </div>
             <div class="inverted field">
               <label>Sorted</label>
               <select
@@ -139,16 +119,17 @@
                 <option value="2">Reverse</option>
               </select>
             </div>
-            <div class="inverted field">
-              <label>Only slow numbers</label>
-              <div class="inverted ui input focus">
-                <input
-                  style="color: white; background: #232b32; margin-top: 10px"
-                  name="slownumbers"
-                  type="text"
-                  placeholder="write here numbers"
-                />
-              </div>
+          </div>
+
+          <div class="inverted field">
+            <label>Only slow numbers</label>
+            <div class="inverted ui input focus">
+              <input
+                style="color: white; background: #232b32; margin-top: 10px"
+                name="slownumbers"
+                type="text"
+                placeholder="write here numbers"
+              />
             </div>
           </div>
           <div class="inverted field">
@@ -320,89 +301,7 @@
   <script src="./semantic/semantic.min.js"></script>
   <script src="numbers.js"></script>
   <script src="result.js"></script>
+  <script src="control.js"></script>
   <script src="app.js"></script>
-  <script>
-    document.onkeydown = function (evt) {
-      evt = evt || window.event;
-      if (memoNums.length !== 1 && resultarr == 0) {
-        if (evt.keyCode == 39) {
-          memoNext();
-        }
-        if (evt.keyCode == 37) {
-          memoPrev();
-        }
-        if (evt.keyCode == 32) {
-          memoReturn();
-        } else if (evt.keyCode == 38 || evt.keyCode == 40) {
-          memoElo();
-        }
-      }
-    };
-    document.addEventListener("keydown", function (evt) {
-      if (evt.key === "Enter") {
-        if (memoNums.length == 1 && resultarr == 0) {
-          evt.preventDefault();
-          document.getElementById("numSettings_form").requestSubmit();
-        } else if (memoNums.length !== 1 && resultarr == 0) {
-          document.getElementById("memoEnd").click();
-        } else if (memoNums.length !== 1 && resultarr !== 0) {
-          document.getElementById("resultEnd").click();
-        }
-      }
-    });
-
-    document
-      .getElementById("numSettings_form")
-      .addEventListener("submit", function (e) {
-        e.preventDefault();
-        document.getElementById("numSettings").style.display = "none";
-        document.getElementById("numMemo").style.display = "flex";
-        var numSettings = getData(e.target);
-        generateNums(numSettings);
-        memoNext();
-        start();
-        if (numSettings.autoAdvanced != false) {
-          interval = setInterval(memoNext, numSettings.autoAdvanced);
-        }
-      });
-    document.getElementById("memoEnd").addEventListener("click", function (e) {
-      e.preventDefault();
-      document.getElementById("numSettings").style.display = "none";
-      document.getElementById("numMemo").style.display = "none";
-      document.getElementById("numResult").style.display = "block";
-      pause();
-      endTime = Date.now();
-      resultTime[resultTime.length - 1].stop = Date.now();
-      resultarr = calculateResults(resultTime);
-      printHead(resultarr);
-      printResult(resultarr);
-      clearInterval(interval);
-    });
-    document
-      .getElementById("resultEnd")
-      .addEventListener("click", function (e) {
-        e.preventDefault();
-        document.getElementById("numSettings").style.display = "block";
-        document.getElementById("numMemo").style.display = "none";
-        document.getElementById("numResult").style.display = "none";
-        resultTime = [];
-        memoNums = ["START"];
-        startTime = 0;
-        stop_time = 0;
-        stop_time_counter = 0;
-        pure_time = 0;
-        avaragetime = 0;
-        elapsedTime = 0;
-        endTime = 0;
-        counterClick = 0;
-        resultarr = 0;
-      });
-
-    document
-      .getElementById("resultSort")
-      .addEventListener("click", function (e) {
-        e.preventDefault();
-        sortResults(resultarr);
-      });
-  </script>
+  <script src="event.js"></script>
 </body>
